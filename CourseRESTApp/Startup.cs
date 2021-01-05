@@ -30,7 +30,7 @@ namespace CourseRESTApp
             services.AddSignalR();
 
             services.AddDbContext<BikesContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("BikesContext")));
+                options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

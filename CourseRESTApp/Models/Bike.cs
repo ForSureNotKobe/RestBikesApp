@@ -30,6 +30,7 @@ namespace CourseRESTApp.Models
         [Required]
         public int FrameSize { get; set; }
 
+        //TODO: While editting/adding new doesn't allow semicolon for data "It's not a number" FIX
         [DataType(DataType.Currency)]
         [Required]
         public decimal Price { get; set; }
