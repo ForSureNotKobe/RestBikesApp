@@ -27,3 +27,5 @@ TODOs:
 - pin riding spots
 - rank them by points (like/dislike mechanic)
 - store pins data (coordinates, rank) in database?
+
+7. Add Registration Login (users database) for other functionalities. Connecting messages to certain user.
