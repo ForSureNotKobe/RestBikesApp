@@ -8,7 +8,7 @@ TODOs:
 - save f.e. last 5 minutes of chat history
 
 2. Cover functionalities with monitoring (Appilcation Insights) -> 07-08.01
-- DB conection
+- DB connection
 - website respond time
 - chat availability
 
