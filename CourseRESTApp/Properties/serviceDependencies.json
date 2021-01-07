@@ -4,6 +4,13 @@
       "type": "mssql",
       "connectionId": "BikesContext"
     },
+    "secrets1": {
+      "type": "secrets"
+    },
+    "appInsights1": {
+      "type": "appInsights",
+      "connectionId": "APPINSIGHTS_INSTRUMENTATIONKEY"
+    },
     "signalr1": {
       "type": "signalr",
       "connectionId": "Azure__SignalR__ConnectionString"

@@ -7,7 +7,9 @@ document.getElementById("sendButton").disabled = true;
 
 connection.on("ReceiveMessage", function (user, message) {
     var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    var encodedMsg = user + " says " + msg;
+    var date = new Date();
+    var dateOptions = { weekday: 'short', hour: '2-digit', minute: '2-digit' };
+    var encodedMsg = date.toLocaleDateString("en-EN",dateOptions) + " "+ user + ": " + msg;
     var li = document.createElement("li");
     li.textContent = encodedMsg;
     document.getElementById("messagesList").appendChild(li);
