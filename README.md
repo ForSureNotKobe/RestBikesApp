@@ -4,9 +4,9 @@ Playground app for learning .NET and Azure Services
 TODOs:
 
 1. Chat -> 07.01
-- create chatbox with scroller
-- save f.e. last 5 minutes of chat history
-- reloading site shouldn't affect visiiblity of messages
+- create chatbox with scroller -> make chatbox prettier overall 
+- save f.e. last 5 minutes of chat history -> cache messages!
+- reloading site shouldn't affect visiiblity of messages -> cache messages!
 
 2. Cover functionalities with monitoring (Appilcation Insights) -> 07-08.01
 - DB connection
