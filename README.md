@@ -15,3 +15,5 @@ TODOs:
 3. Work on design of webapp.
 
 4. In the meantime think about more things to add...
+
+5. Get rid off premade pages.
