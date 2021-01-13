@@ -1,0 +1,18 @@
+﻿@model Chat
+<div class="chat-body">
+
+    @foreach (var message in Model.Messages)
+    {
+    <p>@message.TImestamp @message.Name: @message.Text</p>
+    }
+
+    <footer>
+        <div>
+            <form asp-controller="Chat" asp-action="CreateMessage">
+                <input type="hidden" name="chatId" value="@Model.Id" />
+                <input type="text" name="message" />
+                <button type="submit">Send!</button>
+            </form>
+        </div>
+    </footer>
+</div>
