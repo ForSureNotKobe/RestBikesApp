@@ -3,29 +3,34 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
 //Disable send button until connection is established
-document.getElementById("sendButton").disabled = true;
+//document.getElementById("sendButton").disabled = true;
 
-connection.on("ReceiveMessage", function (user, message) {
-    var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    var date = new Date();
-    var dateOptions = { weekday: 'short', hour: '2-digit', minute: '2-digit' };
-    var encodedMsg = date.toLocaleDateString("en-EN",dateOptions) + " "+ user + ": " + msg;
-    var li = document.createElement("li");
-    li.textContent = encodedMsg;
-    document.getElementById("messagesList").appendChild(li);
-});
+var _connectionId = '';
 
-connection.start().then(function () {
-    document.getElementById("sendButton").disabled = false;
-}).catch(function (err) {
-    return console.error(err.toString());
-});
+connection.on("ReceiveMessage", function (data) {
+    console.log(data);
+})
 
-document.getElementById("sendButton").addEventListener("click", function (event) {
-    var user = "test without login";
-    var message = document.getElementById("messageInput").value;
-    connection.invoke("SendMessage", user, message).catch(function (err) {
-        return console.error(err.toString());
-    });
-    event.preventDefault();
-});
+
+var joinRoom = function () {
+    var url = '/SignalR/JoinRoom/' + _connectionId + '/@Model.Name'
+    axios.post(url, null)
+        .then(res => {
+            console.log("Room Joined!", res);
+        })
+        .catch(err => {
+            console.err("Failed to join the room!", res);
+        })
+}
+
+connection.start()
+    .then(function () {
+        connection.invoke('getConnectionId')
+            .then(function (connectionId) {
+                _connectionId = connectionId
+                joinRoom();
+            })
+    })
+    .catch(function (err) {
+        console.log(err)
+    })

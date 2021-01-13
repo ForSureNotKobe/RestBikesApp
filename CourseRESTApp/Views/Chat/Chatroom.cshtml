@@ -3,7 +3,7 @@
 
     @foreach (var message in Model.Messages)
     {
-    <p>@message.TImestamp @message.Name: @message.Text</p>
+        <p>@message.TImestamp @message.Name: @message.Text</p>
     }
 
     <footer>
@@ -11,8 +11,14 @@
             <form asp-controller="Chat" asp-action="CreateMessage">
                 <input type="hidden" name="chatId" value="@Model.Id" />
                 <input type="text" name="message" />
-                <button type="submit">Send!</button>
+                <button id="sendButton" type="submit">Send!</button>
             </form>
         </div>
     </footer>
 </div>
+
+
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="~/js/chat.js"></script>
