@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using SignalRChat.Hubs;
 using CourseRESTApp.Data;
 using Microsoft.EntityFrameworkCore;
+using CourseRESTApp.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace CourseRESTApp
 {
@@ -29,8 +31,24 @@ namespace CourseRESTApp
             services.AddControllersWithViews();
             services.AddSignalR();
 
+            services.AddDbContext<ChatContext>(options =>
+                options.UseSqlServer(Configuration["Data:ConnectionStrings:DefaultConnection"]));
+
             services.AddDbContext<BikesContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration["Data:ConnectionStrings:DefaultConnection"]));
+
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 4;
+            })
+                .AddEntityFrameworkStores<ChatContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +61,7 @@ namespace CourseRESTApp
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
