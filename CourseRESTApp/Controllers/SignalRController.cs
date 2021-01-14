@@ -36,6 +36,7 @@ namespace CourseRESTApp.Controllers
             return Ok();
         }
 
+        [HttpPost("[action]")]
         public async Task<IActionResult> SendMessage(
             string message,
             int chatId,

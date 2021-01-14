@@ -7,7 +7,7 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
 var _connectionId = '';
 
-connection.on("ReceiveMessage", function (data) {
+connection.on("RecieveMessage", function (data) {
     console.log(data);
 })
 
@@ -34,3 +34,17 @@ connection.start()
     .catch(function (err) {
         console.log(err)
     })
+
+var sendMessage = function (event) {
+    event.preventDefault();
+    var data = new FormData(event.target);
+
+    axios.post('/SignalR/SendMessage', data)
+        .then(res => {
+            console.log("Message sent!")
+            console.log(data)
+        })
+        .catch(er => {
+            console.log("Failed to send a message!")
+        })
+}

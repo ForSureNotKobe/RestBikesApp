@@ -32,10 +32,10 @@ namespace CourseRESTApp
             services.AddSignalR();
 
             services.AddDbContext<ChatContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration["Data:ConnectionStrings:DefaultConnection"]));
 
             services.AddDbContext<BikesContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration["Data:ConnectionStrings:DefaultConnection"]));
 
             services.AddIdentity<User, IdentityRole>(options =>
             {
