@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Chat>
+
+<form action="Chat/Create" method="POST">
+    <input type="text" name="name" placeholder="Name of new room" />
+    <input type="submit" value="Create" />
+</form>
+
+<div class="row">
+    <div class="col-6">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <vc:room></vc:room>
+        }
+    </div>
+    @foreach (var chat in Model)
+    {
+        <a class="room-button" asp-controller="Chat" asp-action="JoinRoom" asp-route-id="@chat.Id" method="GET">
+            @chat.Name
+        </a>
+    }
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
