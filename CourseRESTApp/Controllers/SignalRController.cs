@@ -55,7 +55,7 @@ namespace CourseRESTApp.Controllers
             await ctx.SaveChangesAsync();
 
             await _chat.Clients.Group(roomName)
-                .SendAsync("RecieveMessage");
+                .SendAsync("RecieveMessage", Message);
             return Ok();
         }
     }
