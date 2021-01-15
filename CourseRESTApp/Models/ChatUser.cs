@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CourseRESTApp.Models
+﻿namespace CourseRESTApp.Models
 {
     public class ChatUser
     {

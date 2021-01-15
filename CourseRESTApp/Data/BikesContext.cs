@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CourseRESTApp.Models;
+﻿using CourseRESTApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CourseRESTApp.Data
 {

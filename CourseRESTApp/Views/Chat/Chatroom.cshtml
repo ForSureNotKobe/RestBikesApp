@@ -1,14 +1,16 @@
 ﻿@model Chat
-<div class="chat-body">
+<div class="chat-body" id="message-list">
 
     @foreach (var message in Model.Messages)
     {
-        <p>@message.TImestamp @message.Name: @message.Text</p>
+        <div class="message">
+            <p>@message.TImestamp @message.Name: @message.Text</p>
+        </div>
     }
 </div>
 <div>
     <footer>
-        <div class="message">
+        <div>
             <form onsubmit="sendMessage(event)" asp-controller="Chat" asp-action="CreateMessage">
                 <input type="hidden" name="chatId" value="@Model.Id" />
                 <input type="hidden" name="roomName" value="@Model.Name" />
@@ -23,15 +25,18 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-
-//Disable send button until connection is established
-//document.getElementById("sendButton").disabled = true;
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
     var _connectionId = '';
 
     connection.on("RecieveMessage", function (data) {
         console.log(data);
+
+        var p = document.createElement("p")
+        var msg = data.timestamp + " " + data.name + ": " + data.text
+        p.appendChild(document.createTextNode(msg))
+
+        document.getElementById("message-list").append(p);
     })
 
     var joinRoom = function () {
@@ -64,7 +69,6 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
         axios.post('/SignalR/SendMessage', data)
             .then(res => {
                 console.log("Message sent!")
-                console.log(data)
             })
             .catch(er => {
                 console.log("Failed to send a message!")

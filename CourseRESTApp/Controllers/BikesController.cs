@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CourseRESTApp.Data;
+using CourseRESTApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CourseRESTApp.Data;
-using CourseRESTApp.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CourseRESTApp.Controllers
 {
@@ -27,7 +26,7 @@ namespace CourseRESTApp.Controllers
                                             select m.Brand;
 
             var bikes = from m in _context.Bike
-                         select m;
+                        select m;
 
             if (!string.IsNullOrEmpty(searchString))
             {

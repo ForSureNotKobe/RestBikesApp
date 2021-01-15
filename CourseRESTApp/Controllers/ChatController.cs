@@ -2,11 +2,8 @@
 using CourseRESTApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using SignalRChat.Hubs;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -36,7 +33,7 @@ namespace CourseRESTApp.Controllers
         public IActionResult Chatroom(int id)
         {
             var chat = _ctx.Chats
-                .Include (x => x.Messages)
+                .Include(x => x.Messages)
                 .FirstOrDefault(x => x.Id == id);
             return View(chat);
         }
@@ -59,7 +56,7 @@ namespace CourseRESTApp.Controllers
         }
 
 
-        [HttpPost]        
+        [HttpPost]
         public async Task<IActionResult> Create(string name)
         {
             var chat = new Chat
@@ -81,7 +78,8 @@ namespace CourseRESTApp.Controllers
         [HttpGet]
         public async Task<IActionResult> JoinRoom(int id)
         {
-            var chatUser = new ChatUser {
+            var chatUser = new ChatUser
+            {
                 ChatId = id,
                 UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
                 Role = UserRole.Member

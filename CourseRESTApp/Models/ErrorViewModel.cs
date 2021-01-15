@@ -1,5 +1,3 @@
-using System;
-
 namespace CourseRESTApp.Models
 {
     public class ErrorViewModel

@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using SignalRChat.Hubs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CourseRESTApp.Controllers
@@ -55,7 +53,12 @@ namespace CourseRESTApp.Controllers
             await ctx.SaveChangesAsync();
 
             await _chat.Clients.Group(roomName)
-                .SendAsync("RecieveMessage", Message);
+                .SendAsync("RecieveMessage", new
+                {
+                    Text = Message.Text,
+                    Name = Message.Name,
+                    Timestamp = Message.TImestamp.ToString("dd/MM/yyyy hh:mm:ss")
+                });
             return Ok();
         }
     }

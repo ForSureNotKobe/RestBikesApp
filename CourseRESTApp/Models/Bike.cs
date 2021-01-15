@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CourseRESTApp.Models
 {
@@ -20,7 +19,7 @@ namespace CourseRESTApp.Models
         [Required]
         public int ProdYear { get; set; }
 
-        [Range(10,31)]
+        [Range(10, 31)]
         [Display(Name = "Wheel Size")]
         [Required]
         public int WheelSize { get; set; }
