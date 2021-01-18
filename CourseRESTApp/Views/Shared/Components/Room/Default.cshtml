@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Chat>
 
+<h2 class="chat-index-header">Your rooms:</h2>
+
 @foreach (var chat in Model)
 {
 <a class="users-room-button" asp-controller="Chat" asp-action="Chatroom" asp-route-id="@chat.Id" method="GET">

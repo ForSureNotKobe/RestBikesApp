@@ -18,15 +18,26 @@ namespace CourseRESTApp.Controllers
         public ChatController(ChatContext ctx) => _ctx = ctx;
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string search)
         {
-            var chats = _ctx.Chats
-                .Include(x => x.Users)
-                .Where(x => !x.Users
-                .Any(y => y.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                .ToList();
+            if (string.IsNullOrEmpty(search))
+            {
+                var chats = _ctx.Chats
+                    .Include(x => x.Users)
+                    .Where(x => !x.Users
+                    .Any(y => y.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                    .ToList();
 
-            return View(chats);
+                return View(chats);
+            }
+            else
+            {
+                var chats = _ctx.Chats
+                    .Where(x => x.Name.Contains(search))
+                    .ToList();
+
+                return View(chats);
+            }            
         }
 
         [HttpGet]
@@ -57,7 +68,7 @@ namespace CourseRESTApp.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(string name)
+        public async Task<IActionResult> CreateChatroom(string name)
         {
             var chat = new Chat
             {
@@ -71,6 +82,7 @@ namespace CourseRESTApp.Controllers
                 Role = UserRole.Admin
             });
 
+            _ctx.Chats.Add(chat);
             await _ctx.SaveChangesAsync();
             return RedirectToAction("Index");
         }
