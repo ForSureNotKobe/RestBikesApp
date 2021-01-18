@@ -1,13 +1,19 @@
 ﻿@model Chat
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<User> UserManager
+
 <div class="chat-body" id="message-list">
 
     @foreach (var message in Model.Messages)
     {
         <div class="message">
-            <p>@message.TImestamp @message.Name: @message.Text</p>
+            <div class="message-sender">@message.Name:</div>
+            <div class="message-content">@message.Text</div>
+            <div class="message-timestamp">@message.TImestamp</div>
         </div>
     }
 </div>
+
 <div>
     <footer>
         <div>
@@ -25,6 +31,8 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
 
+    @*var usrName = @UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result;*@
+
     var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
     const messages = document.getElementById('message-list');
@@ -34,11 +42,34 @@
     connection.on("RecieveMessage", function (data) {
         console.log(data);
 
-        var p = document.createElement("p");
-        var msg = data.timestamp + " " + data.name + ": " + data.text;
-        p.appendChild(document.createTextNode(msg));
+        var message = document.createElement("div")
+        message.classList.add('message')
 
-        messages.append(p);
+        var sender = document.createElement("div")
+        sender.classList.add('message-sender')
+        sender.appendChild(document.createTextNode(data.name + ":"))
+
+        var content = document.createElement("div")
+        content.classList.add('message-content')
+        content.appendChild(document.createTextNode(data.text))
+
+        var timestamp = document.createElement("div")
+        timestamp.classList.add('message-timestamp')
+        timestamp.appendChild(document.createTextNode(data.timestamp))
+
+        message.appendChild(sender);
+        message.appendChild(content);
+        message.appendChild(timestamp);
+
+        messages.append(message);
+
+        //TODO: Get the recognition of user who is sending a message
+
+        //console.log(usrName);
+
+        //if (data.name == usrName) {
+        //    messages.scrollTop = messages.scrollHeight;
+        //}
     })
 
     var joinRoom = function () {
@@ -72,7 +103,6 @@
         axios.post('/SignalR/SendMessage', data)
             .then(res => {
                 console.log("Message sent!");
-                messages.scrollTop = messages.scrollHeight;
             })
             .catch(er => {
                 console.log("Failed to send a message!");
