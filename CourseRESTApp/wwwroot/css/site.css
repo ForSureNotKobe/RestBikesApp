@@ -107,3 +107,10 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.chat-body {
+    height: 750px;
+    width: 600px;
+    overflow: auto;
+    direction: rtl;
+}

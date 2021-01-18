@@ -27,16 +27,18 @@
 
     var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
+    const messages = document.getElementById('message-list');
+
     var _connectionId = '';
 
     connection.on("RecieveMessage", function (data) {
         console.log(data);
 
-        var p = document.createElement("p")
-        var msg = data.timestamp + " " + data.name + ": " + data.text
-        p.appendChild(document.createTextNode(msg))
+        var p = document.createElement("p");
+        var msg = data.timestamp + " " + data.name + ": " + data.text;
+        p.appendChild(document.createTextNode(msg));
 
-        document.getElementById("message-list").append(p);
+        messages.append(p);
     })
 
     var joinRoom = function () {
@@ -54,12 +56,13 @@
         .then(function () {
             connection.invoke('getConnectionId')
                 .then(function (connectionId) {
-                    _connectionId = connectionId
+                    _connectionId = connectionId;
                     joinRoom();
+                    messages.scrollTop = messages.scrollHeight;
                 })
         })
         .catch(function (err) {
-            console.log(err)
+            console.log(err);
         })
 
     var sendMessage = function (event) {
@@ -68,10 +71,12 @@
 
         axios.post('/SignalR/SendMessage', data)
             .then(res => {
-                console.log("Message sent!")
+                console.log("Message sent!");
+                messages.scrollTop = messages.scrollHeight;
             })
             .catch(er => {
-                console.log("Failed to send a message!")
+                console.log("Failed to send a message!");
             })
     }
+
 </script>
